@@ -21,6 +21,7 @@ Castling uses Chess960-style legality with orthodox destination squares:
 make setup
 make validate
 make test
+make host-info
 ```
 
 ## Engine setup
@@ -51,11 +52,15 @@ make probe
 make match
 ```
 
+`make match` runs games in parallel by default (`parallel_games: auto` in match configs). Worker count is selected automatically from host CPU/RAM and engine settings.
+
 Override configs without editing files:
 
 ```bash
 make probe PROBE_CONFIG=configs/probe_swapped_white.yaml
 make match MATCH_CONFIG=configs/match_swapped_white.yaml
+make tournament TOURNAMENT_CONFIG=configs/tournament.yaml
+make host-info HOST_CONFIG=configs/match_swapped_white.yaml
 ```
 
 ### Multi-variant batch
@@ -79,7 +84,7 @@ make parse
 make aggregate
 ```
 
-`make parse` skips empty `.pgn` files (with a warning), which helps recover from interrupted runs.
+`make parse` skips empty `.pgn` files with a warning (useful after interrupted runs).
 
 `make aggregate` writes:
 - `data/processed/summary.csv`
