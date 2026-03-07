@@ -41,7 +41,7 @@ def _result_str(board: chess.Board) -> str:
 
 
 def _pgn_variant_header(variant: str) -> str:
-    # PGN Variant must be recognized by python-chess.
+    # PGN Variant must be a known variant label for python-chess.
     return "Standard" if variant == "orthodox" else "Chess960"
 
 
@@ -98,7 +98,7 @@ def run_selfplay_matches(cfg: MatchConfig) -> Path:
 
             result = _result_str(board)
             if result == "*":
-                # Keep downstream stats/rating pipeline numerically stable.
+                # Keep downstream stats stable when a plies cap is reached.
                 result = "1/2-1/2"
                 game.headers["Termination"] = "MAX_PLIES_ADJUDICATED_DRAW"
             else:

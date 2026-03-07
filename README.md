@@ -56,7 +56,6 @@ Override configs without editing files:
 ```bash
 make probe PROBE_CONFIG=configs/probe_swapped_white.yaml
 make match MATCH_CONFIG=configs/match_swapped_white.yaml
-make tournament TOURNAMENT_CONFIG=configs/tournament.yaml
 ```
 
 ### Multi-variant batch
@@ -67,12 +66,20 @@ make tournament
 
 This runs all configs listed in `configs/tournament.yaml` (`orthodox`, `swapped_white`, `swapped_black`, `swapped_both`) and writes PGNs/logs to `data/raw/`.
 
+Use a custom tournament config:
+
+```bash
+make tournament TOURNAMENT_CONFIG=configs/tournament.yaml
+```
+
 ## Parse and aggregate
 
 ```bash
 make parse
 make aggregate
 ```
+
+`make parse` skips empty `.pgn` files (with a warning), which helps recover from interrupted runs.
 
 `make aggregate` writes:
 - `data/processed/summary.csv`

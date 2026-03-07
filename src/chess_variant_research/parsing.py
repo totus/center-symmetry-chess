@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -103,19 +104,20 @@ def initial_board_from_game(game: chess.pgn.Game) -> chess.Board:
     try:
         return game.board()
     except ValueError:
-        # Be defensive with malformed/unknown PGN Variant headers.
+        # Fallback when PGN Variant header is unknown/malformed.
         return chess.Board()
 
 
 def _variant_from_headers(game: chess.pgn.Game, init_fen: str) -> str:
     if "ResearchVariant" in game.headers:
         return game.headers["ResearchVariant"]
-    if "Variant" in game.headers and game.headers["Variant"] not in {"Standard", "Chess960"}:
-        return game.headers["Variant"]
+    raw_variant = game.headers.get("Variant", "")
+    if raw_variant and raw_variant not in {"Standard", "Chess960"}:
+        return raw_variant
     for name, fen in START_FENS.items():
         if init_fen == fen:
             return name
-    return game.headers.get("Variant", "unknown")
+    return raw_variant or "unknown"
 
 
 def parse_game(game: chess.pgn.Game, game_id: str, source: str) -> dict[str, Any]:
@@ -165,5 +167,14 @@ def parse_pgn_file(path: Path) -> pd.DataFrame:
 def parse_pgn_paths(paths: list[Path]) -> pd.DataFrame:
     if not paths:
         raise ParseError("No PGN files provided")
-    frames = [parse_pgn_file(p) for p in paths]
+
+    frames: list[pd.DataFrame] = []
+    for path in paths:
+        if path.stat().st_size == 0:
+            warnings.warn(f"Skipping empty PGN file: {path}", stacklevel=2)
+            continue
+        frames.append(parse_pgn_file(path))
+
+    if not frames:
+        raise ParseError("No parseable PGN games found across provided files")
     return pd.concat(frames, ignore_index=True)
