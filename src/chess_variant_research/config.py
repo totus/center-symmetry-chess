@@ -49,11 +49,18 @@ def load_probe_config(path: Path) -> ProbeConfig:
 def load_match_config(path: Path) -> MatchConfig:
     raw = load_yaml(path)
     engine = parse_engine_config(_require(raw, "engine"))
+    parallel_raw = raw.get("parallel_games")
+    parallel_games: int | None
+    if parallel_raw is None or str(parallel_raw).lower() == "auto":
+        parallel_games = None
+    else:
+        parallel_games = int(parallel_raw)
     return MatchConfig(
         variant=_require(raw, "variant"),
         engine=engine,
         games=int(_require(raw, "games")),
         tc=str(_require(raw, "tc")),
+        parallel_games=parallel_games,
         max_plies=int(raw.get("max_plies", 400)),
         seed=int(raw.get("seed", 42)),
         output_pgn=Path(raw.get("output_pgn", "data/raw/matches.pgn")),

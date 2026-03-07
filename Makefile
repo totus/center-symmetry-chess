@@ -6,8 +6,9 @@ PROBE_CONFIG ?= configs/probe_swapped_white.yaml
 MATCH_CONFIG ?= configs/match_swapped_white.yaml
 TOURNAMENT_CONFIG ?= configs/tournament.yaml
 REPORT_CONFIG ?= configs/report.yaml
+HOST_CONFIG ?= configs/match_swapped_white.yaml
 
-.PHONY: setup install-engines validate probe match tournament parse aggregate ratings report test lint fmt clean
+.PHONY: setup install-engines validate host-info probe match tournament parse aggregate ratings report test lint fmt clean
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -19,6 +20,9 @@ install-engines:
 
 validate:
 	$(RUN) scripts/validate_variant.py --variant swapped_white
+
+host-info:
+	$(RUN) scripts/host_info.py --config $(HOST_CONFIG)
 
 probe:
 	$(RUN) scripts/depth_probe.py --config $(PROBE_CONFIG)

@@ -33,6 +33,7 @@ class MatchConfig:
     engine: EngineConfig
     games: int
     tc: str
+    parallel_games: int | None = None
     max_plies: int = 400
     seed: int = 42
     output_pgn: Path = Path("data/raw/matches.pgn")

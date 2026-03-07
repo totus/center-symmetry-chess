@@ -6,6 +6,7 @@ engine:
   hash_mb: 128
 games: 20
 tc: 5+0.05
+parallel_games: auto
 max_plies: 300
 seed: 43
 output_pgn: data/raw/swapped_black_selfplay.pgn
