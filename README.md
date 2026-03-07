@@ -51,6 +51,14 @@ make probe
 make match
 ```
 
+Override configs without editing files:
+
+```bash
+make probe PROBE_CONFIG=configs/probe_swapped_white.yaml
+make match MATCH_CONFIG=configs/match_swapped_white.yaml
+make tournament TOURNAMENT_CONFIG=configs/tournament.yaml
+```
+
 ### Multi-variant batch
 
 ```bash

@@ -31,7 +31,20 @@ def estimate_elo_by_variant(df: pd.DataFrame) -> pd.DataFrame:
     data = add_score_columns(df)
     rows: list[dict[str, float | str | int]] = []
     for variant, g in data.groupby("variant", dropna=False):
-        scores = g["white_score"]
+        scores = g["white_score"].dropna()
+        if len(scores) == 0:
+            rows.append(
+                {
+                    "variant": str(variant),
+                    "games": int(len(g)),
+                    "score": float("nan"),
+                    "elo_diff": float("nan"),
+                    "elo_ci_low": float("nan"),
+                    "elo_ci_high": float("nan"),
+                    "likelihood_superiority": float("nan"),
+                }
+            )
+            continue
         score = float(scores.mean())
         elo = score_to_elo(score)
         ci_lo, ci_hi = elo_ci_from_scores(scores)
@@ -39,7 +52,7 @@ def estimate_elo_by_variant(df: pd.DataFrame) -> pd.DataFrame:
         rows.append(
             {
                 "variant": str(variant),
-                "games": int(len(scores)),
+                "games": int(len(g)),
                 "score": score,
                 "elo_diff": elo,
                 "elo_ci_low": ci_lo,

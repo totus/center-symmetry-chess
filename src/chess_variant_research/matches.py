@@ -40,6 +40,11 @@ def _result_str(board: chess.Board) -> str:
     return out.result()
 
 
+def _pgn_variant_header(variant: str) -> str:
+    # PGN Variant must be recognized by python-chess.
+    return "Standard" if variant == "orthodox" else "Chess960"
+
+
 def run_selfplay_matches(cfg: MatchConfig) -> Path:
     if not cfg.engine.path.exists():
         raise MatchError(f"Engine binary not found: {cfg.engine.path}")
@@ -70,7 +75,8 @@ def run_selfplay_matches(cfg: MatchConfig) -> Path:
             game.headers["Round"] = str(game_idx)
             game.headers["White"] = cfg.engine.name
             game.headers["Black"] = cfg.engine.name
-            game.headers["Variant"] = cfg.variant
+            game.headers["Variant"] = _pgn_variant_header(cfg.variant)
+            game.headers["ResearchVariant"] = cfg.variant
             game.headers["FEN"] = start_fen
             game.headers["SetUp"] = "1"
             game.headers["TimeControl"] = cfg.tc
@@ -91,10 +97,15 @@ def run_selfplay_matches(cfg: MatchConfig) -> Path:
                 node = node.add_variation(res.move)
 
             result = _result_str(board)
+            if result == "*":
+                # Keep downstream stats/rating pipeline numerically stable.
+                result = "1/2-1/2"
+                game.headers["Termination"] = "MAX_PLIES_ADJUDICATED_DRAW"
+            else:
+                outcome = board.outcome(claim_draw=True)
+                if outcome:
+                    game.headers["Termination"] = outcome.termination.name
             game.headers["Result"] = result
-            outcome = board.outcome(claim_draw=True)
-            if outcome:
-                game.headers["Termination"] = outcome.termination.name
             pgn_file.write(str(game))
             pgn_file.write("\n\n")
             log_file.write(f"game={game_idx} result={result} plies={board.ply()}\n")
