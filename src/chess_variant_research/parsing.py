@@ -8,6 +8,8 @@ import chess
 import chess.pgn
 import pandas as pd
 
+from .fen import START_FENS
+
 
 class ParseError(ValueError):
     pass
@@ -98,7 +100,22 @@ def initial_board_from_game(game: chess.pgn.Game) -> chess.Board:
         black_rank = piece_placement.split("/")[0] if "/" in piece_placement else ""
         chess960 = white_rank != "RNBQKBNR" or black_rank != "rnbqkbnr"
         return chess.Board(fen=fen, chess960=chess960)
-    return game.board()
+    try:
+        return game.board()
+    except ValueError:
+        # Be defensive with malformed/unknown PGN Variant headers.
+        return chess.Board()
+
+
+def _variant_from_headers(game: chess.pgn.Game, init_fen: str) -> str:
+    if "ResearchVariant" in game.headers:
+        return game.headers["ResearchVariant"]
+    if "Variant" in game.headers and game.headers["Variant"] not in {"Standard", "Chess960"}:
+        return game.headers["Variant"]
+    for name, fen in START_FENS.items():
+        if init_fen == fen:
+            return name
+    return game.headers.get("Variant", "unknown")
 
 
 def parse_game(game: chess.pgn.Game, game_id: str, source: str) -> dict[str, Any]:
@@ -109,7 +126,7 @@ def parse_game(game: chess.pgn.Game, game_id: str, source: str) -> dict[str, Any
     row: dict[str, Any] = {
         "game_id": game_id,
         "source": source,
-        "variant": game.headers.get("Variant", "unknown"),
+        "variant": _variant_from_headers(game, init_fen),
         "white_engine": game.headers.get("White", "unknown"),
         "black_engine": game.headers.get("Black", "unknown"),
         "result": game.headers.get("Result", "*"),

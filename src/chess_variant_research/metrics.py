@@ -63,8 +63,8 @@ def summarize_openings(df: pd.DataFrame) -> pd.DataFrame:
 
 def compare_swaps(df: pd.DataFrame) -> dict[str, Any]:
     data = add_score_columns(df)
-    sw = data[data["variant"] == "swapped_white"]["white_score"]
-    sb = data[data["variant"] == "swapped_black"]["white_score"]
+    sw = data[data["variant"] == "swapped_white"]["white_score"].dropna()
+    sb = data[data["variant"] == "swapped_black"]["white_score"].dropna()
     if len(sw) == 0 or len(sb) == 0:
         return {"delta_score_pct": None}
     return {"delta_score_pct": float((sw.mean() - sb.mean()) * 100)}
