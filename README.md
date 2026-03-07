@@ -23,12 +23,75 @@ make validate
 make test
 ```
 
-## Common workflow
+## Engine setup
+
+Install Fairy-Stockfish (example via Homebrew on macOS):
 
 ```bash
-make install-engines
+brew install fairy-stockfish
+mkdir -p engines/bin
+ln -sf "$(command -v fairy-stockfish)" engines/bin/fairy-stockfish
+```
+
+Verify engine wiring:
+
+```bash
+./engines/bin/fairy-stockfish --help >/dev/null
+make validate
+```
+
+If you do not want a symlink, edit `engine.path` in the `configs/*.yaml` files.
+
+## Run experiments
+
+### Single experiment (default swapped White)
+
+```bash
 make probe
 make match
+```
+
+### Multi-variant batch
+
+```bash
+make tournament
+```
+
+This runs all configs listed in `configs/tournament.yaml` (`orthodox`, `swapped_white`, `swapped_black`, `swapped_both`) and writes PGNs/logs to `data/raw/`.
+
+## Parse and aggregate
+
+```bash
+make parse
+make aggregate
+```
+
+`make aggregate` writes:
+- `data/processed/summary.csv`
+- `data/processed/openings.csv`
+
+## Compute ratings
+
+```bash
+make ratings
+```
+
+Writes `data/processed/ratings.csv` with score, Elo estimate, CI, and LoS proxy.
+
+## Generate report
+
+```bash
+make report
+```
+
+Writes `data/reports/final_report.md` using `configs/report.yaml`.
+
+## End-to-end sequence
+
+```bash
+make setup
+make validate
+make tournament
 make parse
 make aggregate
 make ratings
@@ -51,7 +114,8 @@ make report
 
 - Primary expected engine: Fairy-Stockfish binary in `engines/bin/fairy-stockfish`
 - Optional match runner binary: `fastchess` (if available)
-- Python orchestration fallback uses `python-chess` UCI API for self-play and analysis.
+- Current workflow uses `python-chess` UCI orchestration for self-play and analysis.
+- `fastchess` is optional and not required for the documented workflow.
 
 ### Third-party engine licenses
 
