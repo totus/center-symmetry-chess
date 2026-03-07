@@ -36,7 +36,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
+addopts = "-q --cov=src/chess_variant_research --cov-report=term-missing --cov-fail-under=100"
 
 [tool.ruff]
 line-length = 100
@@ -52,3 +52,10 @@ warn_unused_configs = true
 mypy_path = "src"
 ignore_missing_imports = true
 disallow_any_unimported = false
+
+[tool.coverage.run]
+source = ["src/chess_variant_research"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true

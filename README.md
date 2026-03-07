@@ -154,3 +154,9 @@ make report
 
 - This repository is intentionally local-first.
 - No GUI/web application is included.
+
+## CI and dependency automation
+
+- GitHub Actions lint workflow: `.github/workflows/lint.yml`
+- GitHub Actions test workflow (with 100% coverage gate): `.github/workflows/tests.yml`
+- Dependabot config: `.github/dependabot.yml`
