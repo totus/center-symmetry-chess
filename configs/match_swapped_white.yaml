@@ -1,0 +1,12 @@
+variant: swapped_white
+engine:
+  name: fairy-stockfish
+  path: engines/bin/fairy-stockfish
+  threads: 1
+  hash_mb: 128
+games: 20
+tc: 5+0.05
+max_plies: 300
+seed: 42
+output_pgn: data/raw/swapped_white_selfplay.pgn
+output_log: data/raw/swapped_white_selfplay.log

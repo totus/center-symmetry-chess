@@ -190,11 +190,11 @@ Required features:
 The pipeline must support probing:
  *	the initial position,
  *	and optionally positions after common opening moves such as:
- *	1.e4
- *	1.d4
- *	1.Nf3
- *	1.c4
- *	1.g3
+      *	1.e4
+      *	1.d4
+      *	1.Nf3
+      *	1.c4
+      *	1.g3
 
 for both orthodox and variant setups.
 

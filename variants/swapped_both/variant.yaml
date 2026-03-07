@@ -1,0 +1,4 @@
+name: swapped_both
+description: Both sides have king and queen swapped in start position
+start_fen: rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w KQkq - 0 1
+chess960_castling: true

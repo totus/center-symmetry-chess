@@ -1,0 +1,10 @@
+rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - ; id "orthodox_1e4";
+rnbqkbnr/pppppppp/8/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - ; id "orthodox_1d4";
+rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - ; id "orthodox_1Nf3";
+rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq - ; id "orthodox_1c4";
+rnbqkbnr/pppppppp/8/8/8/6P1/PPPPPP1P/RNBQKBNR b KQkq - ; id "orthodox_1g3";
+rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBKQBNR b KQkq - ; id "swapped_white_1e4";
+rnbqkbnr/pppppppp/8/8/3PP3/8/PPP2PPP/RNBKQBNR b KQkq - ; id "swapped_white_1d4";
+rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBKQB1R b KQkq - ; id "swapped_white_1Nf3";
+rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBKQBNR b KQkq - ; id "swapped_white_1c4";
+rnbqkbnr/pppppppp/8/8/8/6P1/PPPPPP1P/RNBKQBNR b KQkq - ; id "swapped_white_1g3";

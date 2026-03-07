@@ -1,0 +1,4 @@
+name: orthodox
+description: Orthodox chess setup
+start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+chess960_castling: false

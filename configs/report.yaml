@@ -1,0 +1,13 @@
+summary_csv: data/processed/summary.csv
+openings_csv: data/processed/openings.csv
+ratings_csv: data/processed/ratings.csv
+engine_name: fairy-stockfish
+time_control: 5+0.05
+variants:
+  - orthodox
+  - swapped_white
+  - swapped_black
+  - swapped_both
+findings: |
+  Compare swapped_white and swapped_black score/rating deltas.
+  Elevated white queenside castling rate in swapped_white would support the king-safety hypothesis.
