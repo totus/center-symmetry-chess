@@ -53,6 +53,13 @@ make report
 - Optional match runner binary: `fastchess` (if available)
 - Python orchestration fallback uses `python-chess` UCI API for self-play and analysis.
 
+### Third-party engine licenses
+
+- Fairy-Stockfish: GPL-3.0
+  - Repository: https://github.com/fairy-stockfish/Fairy-Stockfish
+- fastchess: MIT
+  - Repository: https://github.com/Disservin/fastchess
+
 ## Reproducibility
 
 - All experiments are config-driven through YAML files in `configs/`.
