@@ -1,0 +1,5 @@
+experiments:
+  - config: configs/match_orthodox.yaml
+  - config: configs/match_swapped_white.yaml
+  - config: configs/match_swapped_black.yaml
+  - config: configs/match_swapped_both.yaml

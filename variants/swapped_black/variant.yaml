@@ -1,0 +1,4 @@
+name: swapped_black
+description: Black king and queen swapped in start position
+start_fen: rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+chess960_castling: true

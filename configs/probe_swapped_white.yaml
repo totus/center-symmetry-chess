@@ -1,0 +1,9 @@
+variant: swapped_white
+engine:
+  name: fairy-stockfish
+  path: engines/bin/fairy-stockfish
+  threads: 1
+  hash_mb: 128
+depth: 14
+multipv: 3
+output_csv: data/processed/probe_swapped_white.csv

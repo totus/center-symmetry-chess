@@ -1,0 +1,65 @@
+# Center Symmetry Chess Research Harness
+
+Local, reproducible research pipeline to evaluate the chess variant where White starts with king/queen swapped.
+
+## Variant definitions
+
+- `orthodox`: normal chess
+- `swapped_white`: White back rank `R N B K Q B N R`
+- `swapped_black`: Black back rank `R N B K Q B N R`
+- `swapped_both`: both sides swapped
+
+Castling uses Chess960-style legality with orthodox destination squares:
+- White O-O -> king `g1`, rook `f1`
+- White O-O-O -> king `c1`, rook `d1`
+- Black O-O -> king `g8`, rook `f8`
+- Black O-O-O -> king `c8`, rook `d8`
+
+## Quick start
+
+```bash
+make setup
+make validate
+make test
+```
+
+## Common workflow
+
+```bash
+make install-engines
+make probe
+make match
+make parse
+make aggregate
+make ratings
+make report
+```
+
+## Directory layout
+
+- `configs/`: YAML experiment configs
+- `positions/`: canonical starting FENs and opening suite
+- `variants/`: variant metadata
+- `scripts/`: CLI entry points for each stage
+- `src/chess_variant_research/`: core package
+- `tests/`: castling/parser/metrics tests
+- `data/raw`: PGNs/logs
+- `data/processed`: tabular outputs
+- `data/reports`: generated markdown reports
+
+## Engine stack
+
+- Primary expected engine: Fairy-Stockfish binary in `engines/bin/fairy-stockfish`
+- Optional match runner binary: `fastchess` (if available)
+- Python orchestration fallback uses `python-chess` UCI API for self-play and analysis.
+
+## Reproducibility
+
+- All experiments are config-driven through YAML files in `configs/`.
+- Raw and processed outputs are written to separate directories.
+- Scripts fail loudly on invalid FENs, missing binaries, malformed PGNs, or unsupported variants.
+
+## Notes
+
+- This repository is intentionally local-first.
+- No GUI/web application is included.

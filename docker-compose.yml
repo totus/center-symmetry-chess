@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  research:
+    image: python:3.11-slim
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    command: bash -lc "python -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/python scripts/validate_variant.py --variant swapped_white"
