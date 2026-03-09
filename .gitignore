@@ -12,8 +12,8 @@ htmlcov/
 .DS_Store
 
 # data artifacts
-data/raw/*.pgn
-data/raw/*.log
+data/raw/*.pgn*
+data/raw/*.log*
 data/processed/*.csv
 data/processed/*.parquet
 data/reports/*.md

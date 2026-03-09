@@ -70,6 +70,7 @@ make tournament
 ```
 
 This runs all configs listed in `configs/tournament.yaml` (`orthodox`, `swapped_white`, `swapped_black`, `swapped_both`) and writes PGNs/logs to `data/raw/`.
+If a tournament run is interrupted, rerunning `make tournament` resumes from the existing `output_pgn` and `.part*` shard files instead of replaying completed games.
 
 Use a custom tournament config:
 

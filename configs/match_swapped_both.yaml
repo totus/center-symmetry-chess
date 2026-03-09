@@ -2,9 +2,9 @@ variant: swapped_both
 engine:
   name: fairy-stockfish
   path: engines/bin/fairy-stockfish
-  threads: 2
-  hash_mb: 128
-games: 50
+  threads: 7
+  hash_mb: 8192
+games: 5000
 tc: 5+0.05
 parallel_games: auto
 max_plies: 300
